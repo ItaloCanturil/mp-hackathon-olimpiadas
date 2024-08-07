@@ -15,7 +15,7 @@
       </div>
     </div>
 
-    <ol class="tw-overflow-scroll tw-h-[560px] tw-flex tw-flex-col tw-gap-2">
+    <ol v-if="countries" class="tw-overflow-scroll tw-h-[560px] tw-flex tw-flex-col tw-gap-2">
       <li v-for="country in countries" :key="country.id" class="tw-flex tw-items-center tw-gap-2 tw-rounded-lg tw-bg-gray-100 tw-p-2 tw-w-72">
         <div class="tw-py-2 tw-px-3 tw-bg-slate-200 tw-rounded-lg tw-mr-2">
           {{ country.rank }}
@@ -45,10 +45,13 @@
       </div>
       </li>
     </ol>
+
+    <ListSkeleton v-show="!countries"/>
   </q-card>
 </template>
 
 <script lang="ts" setup>
+import ListSkeleton from './skeleton/ListSkeleton.vue';
 import { useMainStore } from 'src/stores/main-store';
 import { computed, onMounted } from 'vue';
 

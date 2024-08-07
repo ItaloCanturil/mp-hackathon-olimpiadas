@@ -1,16 +1,16 @@
 <template>
   <div>
-        <q-table
-        flat
-        table-class="tw-bg-gray-100 tw-rounded-lg"
-        title="Tabela de jogos"
-        v-if="games.data"
-        :rows="games.data"
-        :columns="columns"
-        v-model:pagination="initialPagination"
-        :filter="filter"
-        :loading="loading"
-        @request="onRequest"
+      <q-table
+      flat
+      table-class="tw-bg-gray-100 tw-rounded-lg"
+      title="Tabela de jogos"
+      v-if="games.data"
+      :rows="games.data"
+      :columns="columns"
+      v-model:pagination="initialPagination"
+      :filter="filter"
+      :loading="loading"
+      @request="onRequest"
       >
         <!-- <template v-slot:top-right>
           <q-input borderless dense debounce="300" v-model="filter" placeholder="Search">
@@ -21,7 +21,7 @@
         </template> -->
       </q-table>
 
-      <TableSkeleton v-show="!games.data"/>
+      <TableSkeleton v-show="!games.data || loading"/>
   </div>
 </template>
 
@@ -31,7 +31,6 @@ import TableSkeleton from 'src/components/skeleton/TableSkeleton.vue';
 import { QTableColumn } from 'quasar';
 import { ref, onMounted, computed } from 'vue';
 import { useMainStore } from 'src/stores/main-store';
-import { useDateFormat } from '@vueuse/core';
 
 const useMain = useMainStore();
 
