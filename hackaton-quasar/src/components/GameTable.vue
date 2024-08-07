@@ -1,7 +1,8 @@
 <template>
   <div>
         <q-table
-        class="bg__main tw-text-white"
+        flat
+        table-class="tw-bg-gray-100 tw-rounded-lg"
         title="Tabela de jogos"
         v-if="games.data"
         :rows="games.data"
@@ -11,13 +12,13 @@
         :loading="loading"
         @request="onRequest"
       >
-        <template v-slot:top-right>
+        <!-- <template v-slot:top-right>
           <q-input borderless dense debounce="300" v-model="filter" placeholder="Search">
             <template v-slot:append>
               <q-icon name="search" />
             </template>
           </q-input>
-        </template>
+        </template> -->
       </q-table>
 
       <TableSkeleton v-show="!games.data"/>
@@ -25,13 +26,19 @@
 </template>
 
 
-<script>
+<script lang="ts" setup>
 import TableSkeleton from 'src/components/skeleton/TableSkeleton.vue';
 import { QTableColumn } from 'quasar';
-import { ref } from 'vue';
+import { ref, onMounted, computed } from 'vue';
+import { useMainStore } from 'src/stores/main-store';
+import { useDateFormat } from '@vueuse/core';
+
+const useMain = useMainStore();
 
 onMounted(() => {
-  useMain.getGames();
+  useMain.getGames().then(() => {
+    initialPagination.value.rowsNumber = useMain.games.meta.total
+  });
 })
 
 const games = computed(() => useMain.games);
@@ -41,7 +48,11 @@ const columns: QTableColumn[] = [
   {
     name: 'data',
     label: 'Data',
-    field: (val) => val.day.split('-').join('/'),
+    field: (val) => {
+      const [yyyy, mm, dd] = val.day.split('-');
+
+      return `${dd}/${mm}/${yyyy}`;
+    },
     sortable: true,
   },
   {
@@ -65,23 +76,22 @@ const columns: QTableColumn[] = [
 ]
 
 const initialPagination = ref({
-        sortBy: 'desc',
-        descending: false,
-        page: 1,
-        rowsPerPage: 10,
-        rowsNumber: games.value ? games.value.meta.total : 0
-      },)
+  sortBy: 'desc',
+  descending: false,
+  page: 1,
+  rowsPerPage: 10,
+  rowsNumber: 0
+},)
 
 const onRequest = async (props: any) => {
   loading.value = true;
   const { page, rowsPerPage, sortBy, descending } = props.pagination;
   // const filter = props.filter;
   try {
-    const returnedData = await useMain.getGames({
+    await useMain.getGames({
       page: page,
 
     })
-    console.log('🚀 ~ onRequest ~ returnedData:', returnedData)
 
     initialPagination.value.page = page
     initialPagination.value.rowsPerPage = rowsPerPage

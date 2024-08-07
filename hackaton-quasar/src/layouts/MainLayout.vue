@@ -4,11 +4,11 @@
       <div class="tw-w-32">
         <img src="/src/assets/logo-paris.png" alt="Logo Parias 2024" class="img">
       </div>
-      <h1 class="tw-text-9xl tw-mt-4 tw-text-white tw-opacity-95">2024</h1>
+      <h1 class="tw-text-9xl tw-mt-4 tw-text-white tw-opacity-95 tw-font-['Abril_Fatface']">2024</h1>
       <span class="tw-bg-white tw-w-full tw-h-24 -tw-mt-10"></span>
       <span class="tw-absolute tw-bg-gray-100 tw-opacity-35 tw-w-full tw-h-full tw-top-0"></span>
     </div>
-    <q-page-container>
+    <q-page-container class="-tw-mt-6">
       <router-view />
     </q-page-container>
   </q-layout>
