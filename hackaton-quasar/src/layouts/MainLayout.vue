@@ -1,7 +1,7 @@
 <template>
   <q-layout view="lHh Lpr lFf">
     <div class="torre tw-relative tw-top-0 tw-w-full tw-h-[35vh] tw-flex tw-flex-col tw-items-center tw-justify-center tw-gap-2">
-      <div class="tw-w-32">
+      <div class="tw-h-32">
         <img src="/src/assets/logo-paris.png" alt="Logo Parias 2024" class="img">
       </div>
       <h1 class="tw-text-9xl tw-mt-4 tw-text-white tw-opacity-95 tw-font-['Abril_Fatface']">2024</h1>
